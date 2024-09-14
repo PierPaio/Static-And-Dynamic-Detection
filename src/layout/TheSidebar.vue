@@ -22,7 +22,7 @@
   
 <script>
 export default {
-  name: 'AppSidebar',
+  name: 'TheSidebar',
   data() {
     return {
       isOpen: false,

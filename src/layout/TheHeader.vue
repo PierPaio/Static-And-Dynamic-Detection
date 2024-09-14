@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <AppSidebar />
+    <TheSidebar />
     <div class="menu-icon">
       <router-link to="/" class="home-link">
         <i class="bi-house-door-fill" style="text-decoration: none; color: white; padding-right: 10px;"></i>
@@ -10,12 +10,12 @@
 </template>
   
 <script>
-import AppSidebar from './AppSidebar.vue';
+import TheSidebar from './TheSidebar.vue';
   
 export default {
-  name: 'AppHeader',
+  name: 'TheHeader',
   components: {
-    AppSidebar,
+    TheSidebar,
   },
 };
 </script>

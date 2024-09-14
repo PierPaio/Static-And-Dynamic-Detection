@@ -9,6 +9,6 @@
   
 <script>
 export default {
-  name: 'AppHome',
+  name: 'TheHome',
 };
 </script>

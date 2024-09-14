@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AppHome from '../layout/AppHome.vue';
+import TheHome from '../layout/Home.vue';
 import FileUpload from '../components/FileUpload.vue';
 import PathInput from '../components/PathInput.vue';
 import CsvViewer from '../components/CsvViewer.vue';
@@ -7,8 +7,8 @@ import CsvViewer from '../components/CsvViewer.vue';
 const routes = [
   {
     path: '/',
-    name: 'AppHome',
-    component: AppHome,
+    name: 'TheHome',
+    component: TheHome,
   },
   {
     path: '/upload',
