@@ -28,15 +28,15 @@ export default {
     return {
       data: [],
       headers: [],
-      intervalId: null, // memorizza l'ID dell'intervallo per poterlo pulire
+      intervalId: null, // memorizzo l'ID dell'intervallo per poterlo pulire
     };
   },
   mounted() {
-  this.fetchData(); // Inizialmente richiama il caricamento dei dati
-    // Imposta l'intervallo per aggiornare i dati ogni 5 secondi
-    this.intervalId = setInterval(() => {
-      this.fetchData();
-    }, 5000);
+    this.fetchData(); // Inizialmente richiamo il caricamento dei dati
+      // Imposto l'intervallo per aggiornare i dati ogni 5 secondi
+      this.intervalId = setInterval(() => {
+        this.fetchData();
+      }, 5000);
   },
   beforeUnmount() {
     // Pulisci l'intervallo quando il componente viene distrutto
@@ -47,7 +47,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await axios.get('http://localhost:3001/data');
+        const response = await axios.get('http://localhost:3001/data'); // richiesta get a server
         this.data = response.data;
         if (this.data.length > 0) {
           this.headers = Object.keys(this.data[0]);
@@ -57,9 +57,10 @@ export default {
         console.error('Error fetching data:', error);
       }
     },
-    plotData() {
+    plotData() { // genera il grafico
       if (!this.data.length) return;
-  
+      
+      // estrae i valori
       const headers = this.headers;
       const xValues = this.data.map(row => row[headers[0]]);
       const yValues = this.data.map(row => row[headers[1]]);
@@ -88,10 +89,11 @@ export default {
         xaxis: { title: headers[0] },
         yaxis: { title: headers[1] }
       };
-  
+      
       this.$nextTick(() => {
-        // Verifica se l'elemento DOM esiste e non è null
+        // Verifica se l'elemento DOM esiste e non è null per evitare errori
         if (this.$refs.plotContainer) {
+          // genera grafico all'interno di elemento plotContainer
           Plotly.newPlot(this.$refs.plotContainer, [normalPoints, anomalyPoints], layout, { responsive: true });
         } else {
           console.error('Element with ref "plotContainer" is not found.');

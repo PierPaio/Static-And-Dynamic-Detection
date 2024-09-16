@@ -10,14 +10,14 @@ import { ref, watch, onMounted } from 'vue';
   
 export default {
   name: 'GeneratedHtml',
-  props: {
+  props: { // proprietà che componente riceve
     csvData: {
       type: Array,
       default: () => []
     }
   },
-  setup(props) {
-    const tableHtml = ref('');
+  setup(props) { // definisco logica principale del componente con Composition API
+    const tableHtml = ref(''); // tableHtml definito come una variabile reattiva
   
     const generateTableHtml = () => {
       if (props.csvData.length > 0) {
@@ -47,10 +47,10 @@ export default {
       }
     };
   
-    // Esegui la generazione dell'HTML ogni volta che i dati cambiano
+    // Eseguo la generazione dell'HTML ogni volta che i dati cambiano
     watch(() => props.csvData, generateTableHtml, { immediate: true });
   
-    // Puoi anche usare onMounted per generare l'HTML all'inizio se necessario
+    // onMounted per generare l'HTML all'inizio se ho già dati disponibili
     onMounted(generateTableHtml);
   
     return {

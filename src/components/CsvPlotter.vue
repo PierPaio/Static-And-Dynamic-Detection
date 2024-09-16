@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%;">
-    <div ref="plotContainer" style="width: 100%; height: 400px;"></div>
+    <div ref="plotContainer" style="width: 100%; height: 400px;"></div> 
   </div>
 </template>
   
@@ -19,7 +19,7 @@ export default {
     data: {
       immediate: true,
       handler(newData) {
-        this.plotData(newData);
+        this.plotData(newData); // chiamato ogni volta che data cambia
       }
     }
   },
@@ -29,7 +29,7 @@ export default {
         return;
       }
   
-      const headers = Object.keys(data[0]);
+      const headers = Object.keys(data[0]); // intestazioni
       const xValues = data.map(row => row[headers[0]]);
       const yValues = data.map(row => row[headers[1]]);
       const anomalyValues = data.map(row => row[headers[2]]);
@@ -59,9 +59,10 @@ export default {
       };
   
       this.$nextTick(() => {
-        // Verifica se l'elemento DOM esiste e non è null
+        // Verifica se l'elemento DOM esiste e non è null per evitare errori
         if (this.$refs.plotContainer) {
-          Plotly.newPlot(this.$refs.plotContainer, [normalPoints, anomalyPoints], layout, { responsive: true });
+          // genera grafico all'interno di elemento plotContainer
+          Plotly.newPlot(this.$refs.plotContainer, [normalPoints, anomalyPoints], layout, { responsive: true }); 
         } else {
           console.error('Element with ref "plotContainer" is not found.');
         }

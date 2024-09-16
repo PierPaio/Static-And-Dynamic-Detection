@@ -56,13 +56,13 @@ export default {
   },
   data() {
     return {
-      file: null,
+      file: null, 
       csvData: [],
       dragOver: false
     };
   },
   computed: {
-    dropAreaStyle() {
+    dropAreaStyle() { //cambio stile quando ci trascino un file sopra
       return {
         border: '2px dashed #ccc',
         padding: '40px',
@@ -76,7 +76,7 @@ export default {
       };
     }
   },
-  methods: {
+  methods: { //metodi che avevo in React
     handleFileChange(event) {
       this.file = event.target.files[0];
     },
@@ -109,8 +109,8 @@ export default {
       this.dragOver = false;
       this.file = event.dataTransfer.files[0];
     },
-    triggerFileInput() {
-      this.$refs.fileInput.click();
+    triggerFileInput() { // attiva in modo programmatio un evento di click su elemento input
+      this.$refs.fileInput.click(); // grazie al ref riesce ad accedere all'elemento input
     }
   }
 };
