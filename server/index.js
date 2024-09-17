@@ -33,33 +33,39 @@ app.post('/set-csv-path', (req, res) => {
 
     const fullPath = path.resolve(__dirname, userPath); //risolvo percorso assoluto su cartella del progetto
 
-    fs.access(fullPath, fs.constants.F_OK, (err) => { //verifico esistena file e se ho accesso
-        if (err) {
-            console.error('File access error:', err);
-            return res.status(400).json({ error: "File not found" });
-        }
-
-        csvPath = fullPath;
-
-        readCsv(csvPath)
-            .then(data => {
-                cachedData = data;
-                res.json({ message: `Monitoring CSV at ${csvPath}` });
-            })
-            .catch(error => {
-                console.error('Error reading CSV:', error);
-                res.status(500).json({ error: 'Error reading CSV' });
-        });
-
-        fs.watchFile(csvPath, async (curr, prev) => { //monitoro csv per modifiche
-            console.log('CSV file changed.');
-            try {
-                cachedData = await readCsv(csvPath); //se cambia, rileggo e aggiorno dati
-            } catch (error) {
-                console.error('Error reading CSV:', error);
+    try {
+        fs.access(fullPath, fs.constants.F_OK, (err) => {
+            if (err) {
+                console.error('File access error:', err);
+                return res.status(400).json({ error: "File not found" });
             }
+
+            csvPath = fullPath;
+
+            readCsv(csvPath)
+                .then(data => {
+                    cachedData = data;
+                    res.json({ message: `Monitoring CSV at ${csvPath}` });
+
+                    // Aggiungi il watchFile dopo aver impostato il percorso e letto il CSV con successo
+                    fs.watchFile(csvPath, async (curr, prev) => {
+                        console.log('CSV file changed.');
+                        try {
+                            cachedData = await readCsv(csvPath);
+                        } catch (error) {
+                            console.error('Error reading CSV:', error);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error reading CSV:', error);
+                    res.status(500).json({ error: 'Error reading CSV' });
+                });
         });
-    });
+    } catch (error) {
+        console.error('Unexpected error:', error);
+        res.status(500).json({ error: 'An unexpected error occurred.' });
+    }
 });
 
 
